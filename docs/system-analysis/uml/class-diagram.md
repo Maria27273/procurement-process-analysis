@@ -109,6 +109,7 @@ classDiagram
     Request "1" --> "*" Document : содержит
     Request "1" --> "*" RequestHistory : имеет историю
     Request "*" --> "1" Route : использует маршрут
+    Request "*" --> "1" Route
 
     PurchaseType "1" --> "*" Route : определяет маршрут
     Route "1" --> "*" ApprovalStep : состоит из
