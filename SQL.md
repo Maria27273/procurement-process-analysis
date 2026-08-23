@@ -15,6 +15,7 @@ SELECT
 FROM procurement_requests
 GROUP BY purchase_type
 ORDER BY avg_processing_time DESC;
+```
 
 ### Результат
 
@@ -43,7 +44,7 @@ SELECT
 FROM procurement_requests
 GROUP BY final_status
 ORDER BY request_count DESC;
-
+```
 
 ### Результат
 
@@ -69,8 +70,9 @@ SELECT
 FROM procurement_requests
 GROUP BY return_count
 ORDER BY return_count;
+```
 
-Результат
+### Результат
 
 | Количество возвратов | Количество заявок | Среднее время обработки, ч |
 | :------------------- | ----------------: | -------------------------: |
@@ -79,7 +81,7 @@ ORDER BY return_count;
 | 2                    |               160 |                      57,70 |
 | 3                    |                38 |                      67,20 |
 
-Интерпретация
+### Интерпретация
 
 С увеличением количества возвратов среднее время обработки возрастает: с 22,37 ч без возвратов до 67,20 ч при трёх возвратах.
 
@@ -96,6 +98,7 @@ SELECT
 FROM procurement_requests
 GROUP BY clarification_count
 ORDER BY clarification_count;
+```
 
 ### Результат
 
@@ -109,7 +112,7 @@ ORDER BY clarification_count;
 | 5                    |                64 |                      56,77 |
 | 6                    |                43 |                      62,89 |
 
-###Интерпретация
+### Интерпретация
 
 В целом с увеличением количества уточнений возрастает среднее время обработки: с 22,19 ч без уточнений до 62,89 ч при шести уточнениях.
 
@@ -127,6 +130,7 @@ SELECT
 FROM procurement_requests
 GROUP BY department
 ORDER BY request_count DESC;
+```
 
 ### Результат
 
@@ -140,7 +144,7 @@ ORDER BY request_count DESC;
 | HR             |               529 |       134 481,41 |                      27,40 |
 | Administration |               492 |       136 692,06 |                      25,52 |
 
-###Интерпретация
+### Интерпретация
 
 Наибольшее количество заявок создают IT и Sales. Наиболее длительное среднее время обработки наблюдается у HR — 27,4 ч.
 
@@ -158,6 +162,7 @@ SELECT
 FROM procurement_requests
 GROUP BY approval_route
 ORDER BY avg_processing_time DESC;
+```
 
 ### Результат
 
@@ -202,8 +207,10 @@ ORDER BY
         WHEN '250–500 тыс.' THEN 4
         WHEN '500 тыс. и более' THEN 5
     END;
-    
+ ```
+
 ### Результат
+
 | Диапазон суммы   | Количество заявок | Средняя сумма, ₽ | Среднее время обработки, ч |
 | :--------------- | ----------------: | ---------------: | -------------------------: |
 | До 50 тыс.       |             2 620 |        18 472,61 |                      11,60 |
@@ -238,6 +245,7 @@ FROM procurement_requests
 WHERE final_status = 'Отклонена'
 GROUP BY rejection_reason
 ORDER BY rejected_count DESC;
+```
 
 ### Результат
 | Причина отклонения                  | Количество | Доля, % | Среднее время обработки, ч |
@@ -272,6 +280,7 @@ SELECT
 FROM procurement_requests
 GROUP BY return_group
 ORDER BY request_count DESC;
+```
 
 ### Результат
 
@@ -280,7 +289,7 @@ ORDER BY request_count DESC;
 | Без возвратов |             4 339 |   86,78 |                      22,37 |
 | С возвратами  |               661 |   13,22 |                      48,06 |
 
-###Интерпретация
+### Интерпретация
 
 Заявки с возвратами составляют 13,22% от общего количества и обрабатываются в среднем более чем в 2 раза дольше, чем заявки без возвратов.
 
