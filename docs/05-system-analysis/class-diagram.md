@@ -17,14 +17,11 @@ classDiagram
     class Role {
         - int id
         - string name
-        - string description
-        + getPermissions()
     }
 
     class Department {
         - int id
         - string name
-        - string code
     }
 
     class Request {
@@ -37,7 +34,7 @@ classDiagram
         - datetime updatedAt
         - datetime completedAt
         + sendForApproval()
-        + changeStatus(newStatus)
+        + changeStatus()
         + getCurrentStep()
     }
 
@@ -45,7 +42,6 @@ classDiagram
         - int id
         - string name
         - string description
-        + getRoutes()
     }
 
     class Document {
@@ -66,18 +62,12 @@ classDiagram
         - string newStatus
         - string comment
         - datetime changedAt
-        + createHistoryRecord()
-        + getHistoryByRequest()
     }
 
     class Route {
         - int id
         - string name
         - bool isActive
-        - datetime createdAt
-        + getSteps()
-        + addStep(role, deadline)
-        + removeStep(stepId)
     }
 
     class ApprovalStep {
@@ -86,11 +76,6 @@ classDiagram
         - string approverRole
         - int deadlineHours
         - string status
-        - datetime startedAt
-        - datetime completedAt
-        + startStep()
-        + completeStep(decision)
-        + getRemainingTime()
     }
 
     class ApprovalDecision {
@@ -123,18 +108,70 @@ classDiagram
     Request "*" --> "1" PurchaseType : имеет тип
     Request "1" --> "*" Document : содержит
     Request "1" --> "*" RequestHistory : имеет историю
-    Request "*" --> "1" Route : следует по маршруту
+    Request "*" --> "1" Route : использует маршрут
 
     PurchaseType "1" --> "*" Route : определяет маршрут
     Route "1" --> "*" ApprovalStep : состоит из
 
-    ApprovalStep "1" --> "1" User : назначен
-    ApprovalStep "1" --> "*" ApprovalDecision : содержит решения
-
+    ApprovalStep "1" --> "*" ApprovalDecision : содержит
     ApprovalDecision "*" --> "1" User : принято пользователем
-    ApprovalDecision "1" --> "1" RequestHistory : записано как событие
 
     RequestHistory "*" --> "1" User : действие выполнил
 
-    Request "1" --> "*" Notification : генерирует
+    Request "1" --> "*" Notification : вызывает
     User "1" --> "*" Notification : получает
+```
+
+---
+
+## Описание основных классов
+
+### User
+
+Пользователь системы. Может создавать и редактировать собственные заявки, а также просматривать доступные ему заявки.
+
+### Role
+
+Роль пользователя в системе, определяющая доступные ему действия.
+
+### Department
+
+Подразделение, к которому относится пользователь.
+
+### Request
+
+Основная сущность системы — закупочная заявка. Содержит информацию о закупке, её текущем статусе и датах обработки.
+
+### PurchaseType
+
+Тип закупки. Используется для определения маршрута согласования.
+
+В проекте предусмотрены следующие типы:
+
+- Простая;
+- IT;
+- Юридическая.
+
+### Document
+
+Документ, прикреплённый к закупочной заявке.
+
+### RequestHistory
+
+История действий с заявкой. Сохраняет информацию об изменениях статуса, выполненном действии, пользователе, комментарии и времени изменения.
+
+### Route
+
+Маршрут согласования, который определяется типом закупки и состоит из последовательности этапов.
+
+### ApprovalStep
+
+Отдельный этап маршрута согласования. Определяет порядок этапа, роль согласующего и установленный срок обработки.
+
+### ApprovalDecision
+
+Решение, принятое согласующим на конкретном этапе. Возможные решения: согласование, отклонение или возврат на доработку.
+
+### Notification
+
+Уведомление пользователя о событиях, связанных с заявкой.
