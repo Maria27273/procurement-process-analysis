@@ -108,13 +108,13 @@ classDiagram
     Request "*" --> "1" PurchaseType : имеет тип
     Request "1" --> "*" Document : содержит
     Request "1" --> "*" RequestHistory : имеет историю
-    Request "*" --> "1" Route : использует маршрут
+    Request "*" --> "1" Route
 
-    PurchaseType "1" --> "*" Route : определяет маршрут
+    PurchaseType "1" --> "*" Route 
     Route "1" --> "*" ApprovalStep : состоит из
 
     ApprovalStep "1" --> "*" ApprovalDecision : содержит
-    ApprovalDecision "*" --> "1" User : принято пользователем
+    ApprovalDecision "*" --> "1" User 
 
     RequestHistory "*" --> "1" User : действие выполнил
 
